@@ -7,4 +7,5 @@ I was inspired by a job interviewer to programmatically determine if a text file
 Install Node and NPM, then run:
 
 npm install
+
 node main.js
