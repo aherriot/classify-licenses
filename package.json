@@ -1,0 +1,23 @@
+{
+  "name": "classify-licenses",
+  "version": "1.0.0",
+  "description": "programmatically determine if a text file a software license agreement file or something else",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aherriot/classify-licenses.git"
+  },
+  "author": "Andrew Herriot",
+  "license": "Public Domain",
+  "bugs": {
+    "url": "https://github.com/aherriot/classify-licenses/issues"
+  },
+  "homepage": "https://github.com/aherriot/classify-licenses",
+  "dependencies": {
+  	"natural": "0.2.0",
+    "async": "0.9.0"
+  }
+}
