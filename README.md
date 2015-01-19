@@ -15,23 +15,23 @@ node main.js
 ```
 Processing training data...
 classifying: ./data/license/CPL1.txt
+classifying: ./data/license/LGPL3.txt
+classifying: ./data/license/appache2.txt
+classifying: ./data/license/MIT.txt
+classifying: ./data/license/boost.txt
 classifying: ./data/license/GPLv3.txt
 classifying: ./data/license/LPPL.txt
-classifying: ./data/license/appache2.txt
-classifying: ./data/license/LGPL3.txt
-classifying: ./data/license/boost.txt
 classifying: ./data/license/php.txt
-classifying: ./data/license/MIT.txt
-classifying: ./data/license/readme1.txt
-classifying: ./data/license/readme2.txt
-classifying: ./data/license/readme3.txt
-classifying: ./data/license/changelog1.txt
-classifying: ./data/license/readme4.txt
-classifying: ./data/license/darwin-wiki-excerpt.txt
+classifying: ./data/not-license/changelog1.txt
+classifying: ./data/not-license/readme2.txt
+classifying: ./data/not-license/readme3.txt
+classifying: ./data/not-license/darwin-wiki-excerpt.txt
+classifying: ./data/not-license/readme4.txt
+classifying: ./data/not-license/readme1.txt
 
 Testing classifier:
-./data/test/darwin-wiki-non-license.txt classified as: not license
-./data/test/python-socket-license.txt classified as: license
-./data/test/readme1-non-license.txt classified as: not license
 ./data/test/BSD-license.txt classified as: license
+./data/test/python-socket-license.txt classified as: license
+./data/test/darwin-wiki-non-license.txt classified as: not license
+./data/test/readme1-non-license.txt classified as: not license
 ```

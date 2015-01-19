@@ -53,10 +53,10 @@ function classifyDirectory(dir, classification, callback) {
 
         //if test, output results
         if(classification === 'test') {
-          console.log(testDir + file + ' classified as: ' + classifier.classify(frequentWords));
+          console.log(dir + file + ' classified as: ' + classifier.classify(frequentWords));
 
         } else { //otherwise, add document.
-          console.log("classifying: " + licenseDir + file);
+          console.log("classifying: " + dir + file);
           classifier.addDocument(frequentWords, classification);
         }
 
