@@ -18,80 +18,56 @@ async.series([
   //adding the licenses to the classifier
   function(callback) {
     console.log('Processing training data...');
-    fs.readdir(licenseDir, function(err, files) {
-      if(err) throw err;
-      var count = 0;
-      files.forEach(function(file){
-        count++;
-        fs.readFile(licenseDir + file, 'utf-8', function(err,data){
-          if (err) throw err;
-          console.log("classifying: " + licenseDir + file);
-          var frequentWords = getFrequency(tokenizer.tokenize(data), minWordLength, maxWordCount);
-          //console.log(frequentWords);
-          classifier.addDocument(frequentWords,'license');
-
-          //finished reading last license file,
-          //signal we are can move on to non-licenses
-          if(--count === 0)
-            callback();
-        });
-      });
-    });
+    classifyDirectory(licenseDir, 'license', callback);
   },
+
   //adding the non-licenses to the classifier
   function(callback) {
-    fs.readdir(nonLicenseDir, function(err, files) {
-      if(err) throw err;
-      var count = 0;
-      files.forEach(function(file){
-        count++;
-        fs.readFile(nonLicenseDir + file, 'utf-8', function(err,data){
-          if (err) throw err;
+    classifyDirectory(nonLicenseDir, 'not license', callback);
+  },
 
-          console.log("classifying: " + nonLicenseDir + file);
-          var frequentWords = getFrequency(tokenizer.tokenize(data), minWordLength, maxWordCount);
-          //console.log(frequentWords);
-          classifier.addDocument(frequentWords,'not license');
-
-          if(--count === 0) { //finished reading last file, so now we can train
-            classifier.train();
-            callback();
-          }
-        });
-      });
-    });
+  //train on the data
+  function(callback) {
+    classifier.train();
+    callback();
   },
   // read our test data files and see if our classifier worked.
   function(callback) {
-    console.log('\n\nTesting classifier:');
-    fs.readdir(testDir, function(err, files) {
-      if(err) throw err;
-      var count = 0;
-      files.forEach(function(file){
-        count++;
-        fs.readFile(testDir + file, 'utf-8', function(err,data){
-          if (err) throw err;
-
-
-          var frequentWords = getFrequency(tokenizer.tokenize(data), minWordLength, maxWordCount);
-
-          console.log(testDir + file + ' classified as: ' + classifier.classify(frequentWords));
-          //console.log(frequentWords);
-
-          if(--count === 0)
-            callback();
-        });
-      });
-    });
+    console.log('\nTesting classifier:');
+    classifyDirectory(testDir, 'test', callback);
   }
 ]);
 
+//iterate over files in a directory dir and classify them with classification
+function classifyDirectory(dir, classification, callback) {
+  fs.readdir(dir, function(err, files) {
+    if(err) throw err;
+    var count = 0;
+    files.forEach(function(file){
+      count++;
+      fs.readFile(dir + file, 'utf-8', function(err,data){
+        if (err) throw err;
 
+        var frequentWords = getFrequency(tokenizer.tokenize(data), minWordLength, maxWordCount);
+        //console.log(frequentWords);
 
+        //if test, output results
+        if(classification === 'test') {
+          console.log(testDir + file + ' classified as: ' + classifier.classify(frequentWords));
 
+        } else { //otherwise, add document.
+          console.log("classifying: " + licenseDir + file);
+          classifier.addDocument(frequentWords, classification);
+        }
 
-
-
+        //finished reading last license file,
+        //signal we are can move on to non-licenses
+        if(--count === 0)
+          callback();
+      });
+    });
+  });
+}
 
 // Returns the list of the most common words in the array
 // That are greater or equal in length to minLength
