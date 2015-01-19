@@ -11,6 +11,11 @@ npm install
 node main.js
 ```
 
+## Usage
+
+Simple drop files into the /data/test/ directory,
+and it will output a line classifying each file in that directory.
+
 ## Output
 ```
 Processing training data...
